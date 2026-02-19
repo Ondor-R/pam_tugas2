@@ -22,21 +22,25 @@ import newsfeedsim.composeapp.generated.resources.compose_multiplatform
 
 data class News(val id: Int, val title: String, val category: String)
 
+// flow yg mensimulasikan berita baru per 2 detik
 fun newsFlow(): Flow<News> = flow {
     var counter = 1
     val categories = listOf("Teknologi", "Olahraga", "Politik")
     while (true) {
-        delay(2000L)
+        delay(2000L) //detiknya
         emit(News(counter, "Berita Terkini $counter", categories.random()))
         counter++
     }
 }
 
+
+//fungsi utk simulasi mengambil detail berita, digunakan secara async di line
 suspend fun fetchNewsDetail(newsId: Int): String {
     delay(1000L)
     return "(ID:$newsId) Detail lengkap untuk berita..."
 }
 
+//StateFlow untuk menyimpan jumlah berita yang sudah dibaca
 val countTeknologi = MutableStateFlow(0)
 val countOlahraga = MutableStateFlow(0)
 val countPolitik = MutableStateFlow(0)
@@ -56,8 +60,8 @@ fun App() {
     LaunchedEffect(Unit) {
         launch {
             newsFlow()
-                .filter { it.category == "Teknologi" }
-                .map { "[${it.category}] ${it.title}" }
+                .filter { it.category == "Teknologi" } //Filter berita berdasarkan kategori tertentu
+                .map { "[${it.category}] ${it.title}" } //Transform data menjadi format yang ditampilkan
                 .collect { formattedNews ->
                     val detail = async { fetchNewsDetail(countTeknologi.value + 1) }.await()
                     newsTeknologi = "$formattedNews \n$detail"
@@ -67,8 +71,8 @@ fun App() {
 
         launch {
             newsFlow()
-                .filter { it.category == "Olahraga" }
-                .map { "[${it.category}] ${it.title}" }
+                .filter { it.category == "Olahraga" } //Filter berita berdasarkan kategori tertentu
+                .map { "[${it.category}] ${it.title}" } //Transform data menjadi format yang ditampilkan
                 .collect { formattedNews ->
                     val detail = async { fetchNewsDetail(countOlahraga.value + 1) }.await()
                     newsOlahraga = "$formattedNews \n$detail"
@@ -78,8 +82,8 @@ fun App() {
 
         launch {
             newsFlow()
-                .filter { it.category == "Politik" }
-                .map { "[${it.category}] ${it.title}" }
+                .filter { it.category == "Politik" } //Filter berita berdasarkan kategori tertentu
+                .map { "[${it.category}] ${it.title}" } //Transform data menjadi format yang ditampilkan
                 .collect { formattedNews ->
                     val detail = async { fetchNewsDetail(countPolitik.value + 1) }.await()
                     newsPolitik = "$formattedNews \n$detail"
