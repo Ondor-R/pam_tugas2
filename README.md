@@ -1,6 +1,7 @@
 Nama: Reyhan Oktavian Putra <br>
 NIM: 123140202 <br>
 
+Semua kode dikerjakan di App.kt <br>
 Path App.kt: composeApp/src/commonMain/kotlin/com/example/newsfeedsim/App.kt <br>
 
 - Flow yang mensimulasikan data berita baru setiap 2 detik
