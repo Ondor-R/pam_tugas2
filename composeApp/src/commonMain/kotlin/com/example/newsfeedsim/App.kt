@@ -34,7 +34,7 @@ fun newsFlow(): Flow<News> = flow {
 }
 
 
-//fungsi utk simulasi mengambil detail berita, digunakan secara async di line
+//fungsi utk simulasi mengambil detail berita, digunakan secara async di line 66, 77, 88
 suspend fun fetchNewsDetail(newsId: Int): String {
     delay(1000L)
     return "(ID:$newsId) Detail lengkap untuk berita..."
